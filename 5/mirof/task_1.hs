@@ -1,0 +1,20 @@
+import Data.List.Split
+import Data.List
+
+main = readFile "problem_1.txt" >>= putStrLn . show . highestSeatId . lines
+
+highestSeatId :: [String] -> Int
+highestSeatId = maximum . map (\(x, y) -> x * 8 + y) . map (\x -> calcSeatId ((take 7 x), (drop 7 x)))
+
+calcSeatId :: (String, String) -> (Int, Int)
+calcSeatId (row, column) = (convertToInt 'B' row, convertToInt 'R' column)
+
+convertToInt :: Char -> String -> Int
+convertToInt char = bitStringToInteger . reverse. map (==char)
+
+bitStringToInteger :: [Bool] -> Int
+bitStringToInteger [] = 0
+bitStringToInteger (x:xs)
+    | x == True  = 1 + 2 * bitStringToInteger xs
+    | x == False = 2 * bitStringToInteger xs
+
