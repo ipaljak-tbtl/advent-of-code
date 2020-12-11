@@ -3,7 +3,7 @@ import Data.Maybe
 import Data.Matrix
 
 main :: IO ()
-main = readFile "problem_1.txt" >>= putStrLn . show . getOccupiedSeats . fromLists . lines
+main = readFile "problem_2.txt" >>= putStrLn . show . getOccupiedSeats . fromLists . lines
 
 getOccupiedSeats :: Matrix Char -> Int
 getOccupiedSeats matrix
@@ -30,15 +30,22 @@ getNewMatrix' matrix ((i, j):indices)
 
 getAdjcentElements :: Matrix Char -> Int -> Int -> String
 getAdjcentElements matrix i j = map fromJust $ filter (/=Nothing) [upLeft, up, upRight, middleLeft, middleRight, downLeft, down, downRight]
-    where upLeft      = safeGet (i-1) (j-1) matrix
-          up          = safeGet (i-1) (j)   matrix
-          upRight     = safeGet (i-1) (j+1) matrix
-          middleLeft  = safeGet (i) (j-1)   matrix
-          middleRight = safeGet (i) (j+1)   matrix
-          downLeft    = safeGet (i+1) (j-1) matrix
-          down        = safeGet (i+1) (j)   matrix
-          downRight   = safeGet (i+1) (j+1) matrix
+    where upLeft      = getIfExist (i-1) (j-1) (-1) (-1) matrix
+          up          = getIfExist (i-1) (j)   (-1) (0)    matrix
+          upRight     = getIfExist (i-1) (j+1) (-1) (1) matrix
+          middleLeft  = getIfExist (i) (j-1)   (0) (-1)matrix
+          middleRight = getIfExist (i) (j+1)   (0) (1) matrix
+          downLeft    = getIfExist (i+1) (j-1) (1) (-1) matrix
+          down        = getIfExist (i+1) (j)   (1) (0) matrix
+          downRight   = getIfExist (i+1) (j+1) (1) (1) matrix
+
+getIfExist :: Int -> Int -> Int -> Int -> Matrix Char -> Maybe Char
+getIfExist i j di dj matrix
+    | safeGet i j matrix == Just '#' = Just '#'
+    | safeGet i j matrix == Just 'L' = Just 'L'
+    | safeGet i j matrix == Nothing  = Nothing
+    | otherwise               = getIfExist (i + di) (j + dj) di dj matrix
 
 conditionFreeToTaken matrix i j = ((length $ filter (=='#') $ getAdjcentElements matrix i j) == 0)
-conditionTakenToFree matrix i j = ((length $ filter (=='#') $ getAdjcentElements matrix i j) >= 4)
+conditionTakenToFree matrix i j = ((length $ filter (=='#') $ getAdjcentElements matrix i j) >= 5)
 
