@@ -57,6 +57,10 @@ name = "d11"
 version = "1.0.0"
 
 [[package]]
+name = "d12"
+version = "1.0.0"
+
+[[package]]
 name = "either"
 version = "1.8.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
