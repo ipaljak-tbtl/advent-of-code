@@ -16,7 +16,7 @@ fn perform_operation(old: Vec<u32>, operation: &[String], monkeys: &[Monkey]) ->
     };
 
     let y = if operation[2] == "old" {
-        old.clone()
+        old
     } else {
         vec![operation[2].parse().unwrap(); old.len()]
     };
@@ -47,7 +47,7 @@ pub fn solve(input: &[String]) -> u128 {
             .collect();
 
         i += 1;
-        let operation: Vec<String> = input[i][19..].split(" ").map(String::from).collect();
+        let operation: Vec<String> = input[i][19..].split(' ').map(String::from).collect();
 
         i += 1;
         let test: u32 = input[i][21..].parse().unwrap();

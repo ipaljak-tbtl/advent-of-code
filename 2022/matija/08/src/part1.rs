@@ -38,8 +38,8 @@ pub fn solve(input: &[String]) -> u32 {
             }
 
             found = true;
-            for ti in 0..i {
-                if &trees[ti][j] >= size {
+            for tree in trees.iter().take(i) {
+                if &tree[j] >= size {
                     found = false;
                 }
             }
@@ -49,8 +49,8 @@ pub fn solve(input: &[String]) -> u32 {
             }
 
             found = true;
-            for ti in (i + 1)..trees.len() {
-                if &trees[ti][j] >= size {
+            for tree in trees.iter().skip(i + 1) {
+                if &tree[j] >= size {
                     found = false;
                 }
             }

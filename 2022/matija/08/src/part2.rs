@@ -17,41 +17,45 @@ pub fn solve(input: &[String]) -> u32 {
         for (j, size) in row.iter().enumerate() {
             let mut score_left = 0;
             for ti in (0..j).rev() {
-                if &trees[i][ti] < size {
+                if &trees[i][ti] <= size {
                     score_left += 1;
-                } else if &trees[i][ti] == size {
-                    score_left += 1;
-                    break;
+
+                    if &trees[i][ti] == size {
+                        break;
+                    }
                 }
             }
 
             let mut score_right = 0;
             for ti in (j + 1)..row.len() {
-                if &trees[i][ti] < size {
+                if &trees[i][ti] <= size {
                     score_right += 1;
-                } else if &trees[i][ti] == size {
-                    score_right += 1;
-                    break;
+
+                    if &trees[i][ti] == size {
+                        break;
+                    }
                 }
             }
 
             let mut score_up = 0;
             for ti in (0..i).rev() {
-                if &trees[ti][j] < size {
+                if &trees[ti][j] <= size {
                     score_up += 1;
-                } else if &trees[ti][j] == size {
-                    score_up += 1;
-                    break;
+
+                    if &trees[ti][j] == size {
+                        break;
+                    }
                 }
             }
 
             let mut score_down = 0;
-            for ti in (i + 1)..trees.len() {
-                if &trees[ti][j] < size {
+            for tree in trees.iter().skip(i + 1) {
+                if &tree[j] <= size {
                     score_down += 1;
-                } else if &trees[ti][j] == size {
-                    score_down += 1;
-                    break;
+
+                    if &tree[j] == size {
+                        break;
+                    }
                 }
             }
 

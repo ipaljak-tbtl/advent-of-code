@@ -38,7 +38,7 @@ pub fn solve(input: &[String]) -> u32 {
             .collect();
 
         i += 1;
-        let operation: Vec<String> = input[i][19..].split(" ").map(String::from).collect();
+        let operation: Vec<String> = input[i][19..].split(' ').map(String::from).collect();
 
         i += 1;
         let test: u32 = input[i][21..].parse().unwrap();
@@ -64,8 +64,7 @@ pub fn solve(input: &[String]) -> u32 {
     for _ in 0..20 {
         for i in 0..monkeys.len() {
             for j in 0..monkeys[i].items.len() {
-                let worry =
-                    perform_operation(monkeys[i].items[j].clone(), &monkeys[i].operation) / 3;
+                let worry = perform_operation(monkeys[i].items[j], &monkeys[i].operation) / 3;
 
                 if worry % monkeys[i].test == 0 {
                     let if_true = monkeys[i].if_true as usize;

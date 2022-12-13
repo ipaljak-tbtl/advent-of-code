@@ -53,11 +53,23 @@ name = "d08"
 version = "1.0.0"
 
 [[package]]
+name = "d09"
+version = "1.0.0"
+
+[[package]]
+name = "d10"
+version = "1.0.0"
+
+[[package]]
 name = "d11"
 version = "1.0.0"
 
 [[package]]
 name = "d12"
+version = "1.0.0"
+
+[[package]]
+name = "d13"
 version = "1.0.0"
 
 [[package]]
