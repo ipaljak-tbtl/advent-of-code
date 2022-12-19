@@ -36,8 +36,8 @@ pub fn solve(input: &[String]) -> u32 {
                     (y_prev, y + 1)
                 };
 
-                for i in from..to {
-                    grid[i][x] = '#';
+                for row in grid.iter_mut().take(to).skip(from) {
+                    row[x] = '#';
                 }
             } else {
                 let (from, to) = if x_prev > x {

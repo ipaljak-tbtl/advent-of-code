@@ -1,8 +1,9 @@
 pub fn solve(input: &[String]) -> u32 {
-    let mut positions = vec![];
+    const TY: i32 = 2000000;
 
-    let ty = 2000000;
-    let (mut x_min, mut x_max) = (i32::MAX, i32::MIN);
+    let mut intervals = vec![];
+
+    let mut beacons = std::collections::HashSet::new();
 
     for line in input {
         let parts: Vec<&str> = line.split(' ').collect();
@@ -13,46 +14,45 @@ pub fn solve(input: &[String]) -> u32 {
         let bx: i32 = parts[8][2..].trim_end_matches(',').parse().unwrap();
         let by: i32 = parts[9][2..].parse().unwrap();
 
-        if (sy - ty).abs() > (sx - bx).abs() + (sy - by).abs() {
+        let tmp = (sx - bx).abs() + (sy - by).abs() - (sy - TY).abs();
+
+        if tmp < 0 {
             continue;
         }
-
-        positions.push((sx, sy, bx, by));
-
-        let tmp = (sx - bx).abs() + (sy - by).abs() - (sy - ty).abs();
 
         let tx_min = sx - tmp;
         let tx_max = sx + tmp;
 
-        if tx_min < x_min {
-            x_min = tx_min;
-        }
+        intervals.push((tx_min, tx_max));
 
-        if tx_max > x_max {
-            x_max = tx_max;
+        if by == TY {
+            beacons.insert((bx, by));
+        }
+    }
+
+    intervals.sort_by(|i1, i2| i1.0.cmp(&i2.0));
+
+    let mut merged_intervals = vec![];
+    merged_intervals.push(intervals[0]);
+
+    for interval in intervals.into_iter().skip(1) {
+        let prev = merged_intervals.pop().unwrap();
+
+        if interval.0 > prev.1 {
+            merged_intervals.push(prev);
+            merged_intervals.push(interval);
+        } else if interval.1 > prev.1 {
+            merged_intervals.push((prev.0, interval.1));
+        } else {
+            merged_intervals.push(prev);
         }
     }
 
     let mut result = 0;
 
-    for tx in x_min..(x_max + 1) {
-        let mut can_contain = true;
-
-        for (sx, sy, bx, by) in &positions {
-            if (&tx, &ty) == (bx, by) {
-                can_contain = true;
-                break;
-            }
-
-            if (sx - tx).abs() + (sy - ty).abs() <= (sx - bx).abs() + (sy - by).abs() {
-                can_contain = false;
-            }
-        }
-
-        if !can_contain {
-            result += 1;
-        }
+    for interval in merged_intervals {
+        result += (interval.1 - interval.0) as u32 + 1;
     }
 
-    result
+    result - (beacons.len() as u32)
 }

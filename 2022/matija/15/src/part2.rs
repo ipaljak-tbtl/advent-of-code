@@ -3,9 +3,6 @@ pub fn solve(input: &[String]) -> u128 {
 
     let mut positions = vec![];
 
-    let (mut x_min, mut x_max) = (i32::MAX, i32::MIN);
-    let (mut y_min, mut y_max) = (i32::MAX, i32::MIN);
-
     for line in input {
         let parts: Vec<&str> = line.split(' ').collect();
 
@@ -16,14 +13,9 @@ pub fn solve(input: &[String]) -> u128 {
         let by: i32 = parts[9][2..].parse().unwrap();
 
         positions.push((sx, sy, bx, by));
-
-        x_min = x_min.min(sx.max(0));
-        x_max = x_max.max(sx.min(N_MAX));
-        y_min = y_min.min(sy.max(0));
-        y_max = y_max.max(sy.min(N_MAX));
     }
 
-    for ty in y_min..(y_max + 1) {
+    for ty in 0..(N_MAX + 1) {
         let mut intervals = vec![];
 
         for (sx, sy, bx, by) in &positions {
@@ -48,14 +40,14 @@ pub fn solve(input: &[String]) -> u128 {
         let mut merged_intervals = vec![];
         merged_intervals.push(intervals[0]);
 
-        for i in 1..intervals.len() {
+        for interval in intervals.into_iter().skip(1) {
             let prev = merged_intervals.pop().unwrap();
 
-            if intervals[i].0 > prev.1 {
+            if interval.0 > prev.1 {
                 merged_intervals.push(prev);
-                merged_intervals.push(intervals[i]);
-            } else if intervals[i].1 > prev.1 {
-                merged_intervals.push((prev.0, intervals[i].1));
+                merged_intervals.push(interval);
+            } else if interval.1 > prev.1 {
+                merged_intervals.push((prev.0, interval.1));
             } else {
                 merged_intervals.push(prev);
             }
