@@ -1,0 +1,15 @@
+[package]
+name = "aoc2023"
+authors = ["matija@tbtl.com"]
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+
+[[bin]]
+name = "d01p1"
+path = "d01/d01p1.rs"
+
+[[bin]]
+name = "d01p2"
+path = "d01/d01p2.rs"
