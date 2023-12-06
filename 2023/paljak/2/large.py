@@ -10,7 +10,6 @@ def find_max(color, token):
 
 
 def solve_line(line):
-    game_id = int(line.split(":")[0].split()[1])
     tokens = line.split(":")[1].split(";")
 
     red = max([find_max("red", token) for token in tokens])
