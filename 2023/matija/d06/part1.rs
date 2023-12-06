@@ -9,10 +9,7 @@ fn solve(reader: impl std::io::BufRead) -> u32 {
 
     let mut result = 1u32;
 
-    for (t, d) in ts.zip(ds) {
-        let t = t.unwrap();
-        let d = d.unwrap();
-
+    for (t, d) in ts.map(Result::unwrap).zip(ds.map(Result::unwrap)) {
         let mut cnt = 0;
         for th in 1..t {
             if th * (t - th) > d {
