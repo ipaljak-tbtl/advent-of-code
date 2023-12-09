@@ -9,11 +9,21 @@ fn str_to_node(s: &str) -> Node {
     )
 }
 
+fn gcd(mut a: u64, mut b: u64) -> u64 {
+    while b != 0 {
+        (a, b) = (b, a % b);
+    }
+    a
+}
+
+fn lcm(a: u64, b: u64) -> u64 {
+    b * (a / gcd(a, b))
+}
+
 fn solve(reader: impl std::io::BufRead) -> u64 {
     let mut lines = reader.lines().map(Result::unwrap);
 
     let first_line = lines.next().unwrap();
-    let mut steps = first_line.chars().cycle();
 
     let mut nodes = std::collections::HashMap::<Node, (Node, Node)>::new();
     lines.skip(1).for_each(|line| {
@@ -30,23 +40,29 @@ fn solve(reader: impl std::io::BufRead) -> u64 {
         }
     });
 
-    let mut cnt = 0;
+    let mut cycles = Vec::<u64>::new();
 
-    while current.iter().any(|node| node.2 != 'Z') {
-        let step = steps.next().unwrap();
-        current.iter_mut().for_each(|node| {
-            let next = nodes.get(node).unwrap();
+    for mut node in current {
+        let mut steps = first_line.chars().cycle();
 
-            *node = match step {
+        let mut cnt = 0;
+
+        while node.2 != 'Z' {
+            let step = steps.next().unwrap();
+            let next = nodes.get(&node).unwrap();
+
+            node = match step {
                 'L' => next.0,
                 _ => next.1,
             };
-        });
 
-        cnt += 1;
+            cnt += 1;
+        }
+
+        cycles.push(cnt);
     }
 
-    cnt
+    cycles.iter().fold(1, |acc, &x| lcm(acc, x))
 }
 
 fn main() {
