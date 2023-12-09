@@ -69,3 +69,11 @@ path = "d08/part1.rs"
 [[bin]]
 name = "d08p2"
 path = "d08/part2.rs"
+
+[[bin]]
+name = "d09p1"
+path = "d09/part1.rs"
+
+[[bin]]
+name = "d09p2"
+path = "d09/part2.rs"
