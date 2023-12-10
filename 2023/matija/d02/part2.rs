@@ -15,14 +15,12 @@ fn get_backwards_unsigned(input: &str, start: usize) -> u32 {
     result
 }
 
-fn main() {
-    let in_lines: Vec<String> = std::io::stdin().lines().collect::<Result<_, _>>().unwrap();
-
+fn solve(reader: impl std::io::BufRead) -> u32 {
     let colors = ["red", "green", "blue"];
 
     let mut result = 0u32;
 
-    for line in in_lines {
+    for line in reader.lines().map(Result::unwrap) {
         let mut power = 1u32;
 
         for color in colors {
@@ -44,5 +42,22 @@ fn main() {
         result += power;
     }
 
-    println!("{result}")
+    result
+}
+
+fn main() {
+    println!("{}", solve(std::io::stdin().lock()));
+}
+
+#[cfg(test)]
+mod tests {
+    use super::solve;
+    use std::{fs::File, io::BufReader};
+
+    #[test]
+    fn test_d02p2() {
+        let reader = BufReader::new(File::open("d02/test_input.txt").unwrap());
+        let result = solve(reader);
+        assert_eq!(result, 2286);
+    }
 }

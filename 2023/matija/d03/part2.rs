@@ -1,7 +1,7 @@
 use std::collections::{HashMap, HashSet};
 
-fn main() {
-    let in_lines: Vec<Vec<char>> = std::io::stdin()
+fn solve(reader: impl std::io::BufRead) -> u32 {
+    let in_lines: Vec<Vec<char>> = reader
         .lines()
         .map(|line| line.unwrap().chars().collect())
         .collect();
@@ -66,5 +66,22 @@ fn main() {
         }
     }
 
-    println!("{result}")
+    result
+}
+
+fn main() {
+    println!("{}", solve(std::io::stdin().lock()));
+}
+
+#[cfg(test)]
+mod tests {
+    use super::solve;
+    use std::{fs::File, io::BufReader};
+
+    #[test]
+    fn test_d03p2() {
+        let reader = BufReader::new(File::open("d03/test_input.txt").unwrap());
+        let result = solve(reader);
+        assert_eq!(result, 467835);
+    }
 }

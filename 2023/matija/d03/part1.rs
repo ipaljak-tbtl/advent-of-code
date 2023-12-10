@@ -2,8 +2,8 @@ fn is_symbol(x: char) -> bool {
     !x.is_ascii_digit() && x != '.'
 }
 
-fn main() {
-    let in_lines: Vec<Vec<char>> = std::io::stdin()
+fn solve(reader: impl std::io::BufRead) -> u32 {
+    let schema: Vec<Vec<char>> = reader
         .lines()
         .map(|line| line.unwrap().chars().collect())
         .collect();
@@ -21,7 +21,7 @@ fn main() {
 
     let mut result = 0u32;
 
-    for (ir, line) in in_lines.iter().enumerate() {
+    for (ir, line) in schema.iter().enumerate() {
         let mut is_part_number = false;
         let mut n_current = 0u32;
 
@@ -37,11 +37,11 @@ fn main() {
                         let r = if r >= 0 { r as usize } else { continue };
                         let c = if c >= 0 { c as usize } else { continue };
 
-                        if r >= in_lines.len() || c >= in_lines[r].len() {
+                        if r >= schema.len() || c >= schema[r].len() {
                             continue;
                         }
 
-                        if is_symbol(in_lines[r][c]) {
+                        if is_symbol(schema[r][c]) {
                             is_part_number = true;
                         }
                     }
@@ -61,5 +61,22 @@ fn main() {
         }
     }
 
-    println!("{result}")
+    result
+}
+
+fn main() {
+    println!("{}", solve(std::io::stdin().lock()));
+}
+
+#[cfg(test)]
+mod tests {
+    use super::solve;
+    use std::{fs::File, io::BufReader};
+
+    #[test]
+    fn test_d03p1() {
+        let reader = BufReader::new(File::open("d03/test_input.txt").unwrap());
+        let result = solve(reader);
+        assert_eq!(result, 4361);
+    }
 }

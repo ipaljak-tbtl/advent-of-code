@@ -1,13 +1,11 @@
 use std::collections::{HashMap, HashSet};
 
-fn main() {
-    let in_lines: Vec<String> = std::io::stdin().lines().collect::<Result<_, _>>().unwrap();
-
+fn solve(reader: impl std::io::BufRead) -> u32 {
     let mut result = 0u32;
 
     let mut copies = HashMap::<usize, u32>::new();
 
-    for (i, line) in in_lines.iter().enumerate() {
+    for (i, line) in reader.lines().map(Result::unwrap).enumerate() {
         let mut winning = HashSet::<u32>::new();
         let mut chosen = HashSet::<u32>::new();
 
@@ -36,5 +34,22 @@ fn main() {
         }
     }
 
-    println!("{result}")
+    result
+}
+
+fn main() {
+    println!("{}", solve(std::io::stdin().lock()));
+}
+
+#[cfg(test)]
+mod tests {
+    use super::solve;
+    use std::{fs::File, io::BufReader};
+
+    #[test]
+    fn test_d04p2() {
+        let reader = BufReader::new(File::open("d04/test_input.txt").unwrap());
+        let result = solve(reader);
+        assert_eq!(result, 30);
+    }
 }
