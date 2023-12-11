@@ -107,14 +107,12 @@ fn solve(reader: impl std::io::BufRead) -> u32 {
 
     let mut result = 0;
 
-    for ti in 0..ps.len() {
+    for (ti, row) in ps.iter().enumerate() {
         let mut cnt = 0;
 
         let mut horizontal_start = '.';
 
-        for tj in 0..ps[ti].len() {
-            let curr = ps[ti][tj];
-
+        for (tj, &curr) in row.iter().enumerate() {
             if path.contains(&(ti, tj)) {
                 if curr == '-'
                     || curr == '7' && horizontal_start == 'L'
