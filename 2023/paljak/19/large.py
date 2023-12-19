@@ -47,9 +47,20 @@ def parse_ratings(ratings):
 def is_accepted(x, m, a, s):
     global rules
     curr = "in"
+    d = {}
+    d["x"] = x
+    d["m"] = m
+    d["a"] = a
+    d["s"] = s
     while curr not in "RA":
         for expr, nxt in rules[curr]:
-            if eval(expr):
+            ok = expr == "True" or (
+                d[expr.split("<")[0]] < int(expr.split("<")[1])
+                if "<" in expr
+                else d[expr.split(">")[0]] > int(expr.split(">")[1])
+            )
+            # if eval(expr):
+            if ok:
                 curr = nxt
                 break
     return curr == "A"
