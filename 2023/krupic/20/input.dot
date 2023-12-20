@@ -1,0 +1,117 @@
+digraph {
+	vg [shape="box"]
+	vg -> { lf vd }
+	dr [shape="box"]
+	dr -> { kg }
+	cn [shape="box"]
+	cn -> { mv pt }
+	rq [shape="box"]
+	rq -> { bk gr }
+	vp [shape="box"]
+	vp -> { lp bk }
+	kg [shape="box"]
+	kg -> { lv }
+	lv [shape="box"]
+	lv -> { jc tp }
+	sj [shape="box"]
+	sj -> { rm vd }
+	jc [shape="box"]
+	jc -> { tp qr }
+	km [shape="box"]
+	km -> { tp dr }
+	jx [shape="box"]
+	jx -> { cn }
+	vd [shape="house"]
+	vd -> { tf lf nb cx hx lr }
+	lp [shape="box"]
+	lp -> { jt bk }
+	vj [shape="box"]
+	vj -> { ps }
+	broadcaster -> { km lr xh rf }
+	dj [shape="box"]
+	dj -> { pt gc }
+	cg [shape="box"]
+	cg -> { vd hx }
+	ln [shape="house"]
+	ln -> { tg }
+	fl [shape="box"]
+	fl -> { pt sk }
+	lm [shape="box"]
+	lm -> { tr bk }
+	lr [shape="box"]
+	lr -> { vd vg }
+	pt [shape="house"]
+	pt -> { vq rf cm jx rg }
+	cx [shape="box"]
+	cx -> { gp }
+	gp [shape="box"]
+	gp -> { vd sj }
+	db [shape="house"]
+	db -> { tg }
+	st [shape="box"]
+	st -> { vd }
+	jt [shape="box"]
+	jt -> { bk }
+	jh [shape="box"]
+	jh -> { lm bk }
+	xf [shape="box"]
+	xf -> { bd tp }
+	gc [shape="box"]
+	gc -> { cm pt }
+	tp [shape="house"]
+	tp -> { dr km kg db vj qr }
+	ps [shape="box"]
+	ps -> { xf tp }
+	rf [shape="box"]
+	rf -> { pt dj }
+	lf [shape="box"]
+	lf -> { nb }
+	bd [shape="box"]
+	bd -> { tp gg }
+	dk [shape="box"]
+	dk -> { tp vj }
+	mn [shape="box"]
+	mn -> { jh bk }
+	tg [shape="house"]
+	tg -> { rx }
+	ql [shape="box"]
+	ql -> { bk zx }
+	tr [shape="box"]
+	tr -> { bk vp }
+	sk [shape="box"]
+	sk -> { pt }
+	nb [shape="box"]
+	nb -> { cg }
+	sb [shape="box"]
+	sb -> { vd cx }
+	qr [shape="box"]
+	qr -> { dk }
+	xh [shape="box"]
+	xh -> { bk ql }
+	rg [shape="box"]
+	rg -> { sd }
+	hx [shape="box"]
+	hx -> { sb }
+	sd [shape="box"]
+	sd -> { pt jx }
+	gr [shape="box"]
+	gr -> { bk mn }
+	gg [shape="box"]
+	gg -> { tp }
+	zx [shape="box"]
+	zx -> { rq }
+	bk [shape="house"]
+	bk -> { xh ln zx }
+	rm [shape="box"]
+	rm -> { st vd }
+	hq [shape="box"]
+	hq -> { fl pt }
+	vq [shape="house"]
+	vq -> { tg }
+	cm [shape="box"]
+	cm -> { rg }
+	tf [shape="house"]
+	tf -> { tg }
+	mv [shape="box"]
+	mv -> { pt hq }
+}
