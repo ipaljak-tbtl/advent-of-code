@@ -1,0 +1,7 @@
+[package]
+name = "d3"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+regex = { version = "1.11.1", features = [] }
