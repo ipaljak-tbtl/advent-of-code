@@ -22,21 +22,6 @@ fn main() {
         })
         .collect::<Vec<_>>();
 
-    let mut ordering = ordering_init.clone();
-
-    ordering.sort_by(|a, b| {
-        if ordering_init.contains(&(a.0, b.0)) {
-            std::cmp::Ordering::Less
-        } else if ordering_init.contains(&(b.0, a.0)) {
-            std::cmp::Ordering::Greater
-        } else {
-            std::cmp::Ordering::Equal
-        }
-    });
-
-    let mut ordering = ordering.into_iter().map(|(a, _)| a).collect::<Vec<_>>();
-    ordering.dedup();
-
     let is_ordered = |a: i64, b: i64| {
         if ordering_init.contains(&(a, b)) {
             true
@@ -47,13 +32,16 @@ fn main() {
         }
     };
 
+    let get_list = |l: &str| {
+        l.split(',')
+            .map(|l| l.parse::<i64>().unwrap())
+            .collect::<Vec<_>>()
+    };
+
     let p1: i64 = lines[1]
         .iter()
         .filter_map(|l| {
-            let list = l
-                .split(',')
-                .map(|l| l.parse::<i64>().unwrap())
-                .collect::<Vec<_>>();
+            let list = get_list(l);
             let sorted = list.iter().is_sorted_by(|&&a, &&b| is_ordered(a, b));
 
             if sorted {
@@ -68,10 +56,7 @@ fn main() {
     let p2: i64 = lines[1]
         .iter()
         .filter_map(|l| {
-            let mut list = l
-                .split(',')
-                .map(|l| l.parse::<i64>().unwrap())
-                .collect::<Vec<_>>();
+            let mut list = get_list(l);
 
             let sorted = list.iter().is_sorted_by(|&&a, &&b| is_ordered(a, b));
 
