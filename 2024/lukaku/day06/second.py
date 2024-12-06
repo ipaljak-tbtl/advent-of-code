@@ -25,18 +25,22 @@ dx = [-1, 0, 1, 0]
 dy = [0, 1, 0, -1]
 def move_guard(puzzle, guard):
     x, y, d = guard
-
-    new_x = x + dx[d]
-    new_y = y + dy[d]
-
-    if new_x < 0 or new_x >= len(puzzle) or new_y < 0 or new_y >= len(puzzle[0]):
-        return None
-
-    if puzzle[new_x][new_y] == '#':
-        d = (d + 1) % 4
-        return x, y, d
     
-    return new_x, new_y, d
+    while True:
+        new_x = x + dx[d]
+        new_y = y + dy[d]
+        if new_x < 0 or new_x >= len(puzzle):
+            return None
+        if new_y < 0 or new_y >= len(puzzle[0]):
+            return None
+        if puzzle[new_x][new_y] == '#':
+            break
+
+        x = new_x
+        y = new_y
+
+    d = (d + 1) % 4
+    return x, y, d
 
 
 start_x = x
