@@ -1,52 +1,60 @@
 #!/usr/bin/env python3
 
 import sys
+from collections import defaultdict
 
-grid = [list(l.strip()) for l in sys.stdin]
+rules = []
+prev = defaultdict(set)
+post = defaultdict(set)
 
-rows = len(grid)
-cols = len(grid[0])
+while line := input().strip():
+    x, y = map(int, line.split('|'))
+    rules.append((x, y))
+    prev[y].add(x)
+    post[x].add(y)
 
-dirs = [(-1, 0), (0, 1), (1, 0), (0, -1)]
+updates = [list(map(int, line.split(','))) for line in sys.stdin]
 
-def cw(d):
-    return (d + 1) % 4
-
-def move(xy, dxy):
-    x, y = xy
-    dx, dy = dxy
-    x += dx
-    y += dy
-    if 0 <= x < rows and 0 <= y < cols:
-        return x, y
-
-def simulate():
-    visited = set()
-
-    pos = next((x, y) for x in range(rows) for y in range(cols) if grid[x][y] == '^')
-    d = 0
-
-    while pos:
-        if (pos, d) in visited:
-            return True
-        visited.add((pos, d))
-        if npos := move(pos, dirs[d]):
-            x, y = npos
-            if grid[x][y] == '#':
-                d = cw(d)
-                continue
-            else:
-                pos = npos
-        else:
+def valid(update):
+    seen_prev = set()
+    for x in update:
+        if not seen_prev.isdisjoint(post[x]):
             return False
+        seen_prev.add(x)
+
+    seen_post = set()
+    for x in reversed(update):
+        if not seen_post.isdisjoint(prev[x]):
+            return False
+        seen_post.add(x)
+
+    return True
+
+def toposort(update):
+    update = set(update)
+
+    s = []
+    v = set()
+    def rec(x):
+        if x in v:
+            return
+        v.add(x)
+        for y in prev[x]:
+            if y in update:
+                rec(y)
+        s.append(x)
+
+    for x in update:
+        rec(x)
+
+    return s
 
 sol = 0
-for i in range(rows):
-    for j in range(cols):
-        if grid[i][j] == '.':
-            grid[i][j] = '#'
-            sol += simulate()
-            grid[i][j] = '.'    
+for update in updates:
+    if not valid(update):
+        assert len(update) % 2 == 1
+        update = toposort(update)
+        sol += update[len(update)//2]
 
 print(sol)
 
