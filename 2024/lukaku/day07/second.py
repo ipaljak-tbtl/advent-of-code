@@ -7,7 +7,7 @@ def concat(a, b):
     return int(str(a) + str(b))
 
 def possible(test_value, numbers):
-    operators = [operator.add, operator.mul]
+    operators = [operator.add, operator.mul, concat]
 
     for combination in itertools.product(operators, repeat = len(numbers)-1):
         result = numbers[0]
