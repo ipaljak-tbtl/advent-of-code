@@ -5,5 +5,3 @@ edition = "2021"
 
 [dependencies]
 scan_fmt = "0.2"
-rayon = "1"
-num_cpus = "1"
